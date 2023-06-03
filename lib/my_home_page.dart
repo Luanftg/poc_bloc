@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:poc_bloc/counter_stream_controller.dart';
 
-import 'counter_cubit.dart';
+import 'counter_bloc.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -12,17 +13,17 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late CounterCubit counterCubit;
+  late CounterBloc counterBloc;
 
   @override
   void initState() {
     super.initState();
-    counterCubit = CounterCubit();
+    counterBloc = CounterBloc();
   }
 
   @override
   void dispose() {
-    counterCubit.close();
+    counterBloc.close();
     super.dispose();
   }
 
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             StreamBuilder<int>(
-                stream: counterCubit.stream,
+                stream: counterBloc.stream,
                 initialData: 0,
                 builder: (_, snapshot) {
                   return Text(
@@ -56,12 +57,12 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           FloatingActionButton(
-            onPressed: counterCubit.decrement,
+            onPressed: () => counterBloc.add(CounterEvent.decrement),
             tooltip: 'Decrement',
             child: const Icon(Icons.remove),
           ),
           FloatingActionButton(
-            onPressed: counterCubit.increment,
+            onPressed: () => counterBloc.add(CounterEvent.increment),
             tooltip: 'Increment',
             child: const Icon(Icons.add),
           ),
