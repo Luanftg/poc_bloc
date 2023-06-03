@@ -3,16 +3,20 @@ import 'dart:async';
 enum CounterEvent { increment, decrement }
 
 class CounterStreamController {
-  StreamController<CounterEvent> eventController =
+  final StreamController<CounterEvent> _eventController =
       StreamController<CounterEvent>();
-  StreamController<int> stateController = StreamController<int>();
+  final StreamController<int> _stateController = StreamController<int>();
 
   int _state = 0;
   int get initialData => _state;
-  Stream<int> get stream => stateController.stream;
+  Stream<int> get stream => _stateController.stream;
+
+  void addEvent(CounterEvent event) {
+    _eventController.sink.add(event);
+  }
 
   CounterStreamController() {
-    eventController.stream.listen((event) {
+    _eventController.stream.listen((event) {
       _handleEvent(event);
     });
   }
@@ -21,10 +25,11 @@ class CounterStreamController {
     switch (event) {
       case CounterEvent.increment:
         _state++;
-        break;
+
       case CounterEvent.decrement:
         _state--;
-        break;
     }
+
+    _stateController.add(_state);
   }
 }
