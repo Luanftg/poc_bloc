@@ -11,6 +11,10 @@ class CounterStreamController {
   int get initialData => _state;
   Stream<int> get stream => stateController.stream;
 
+  void addEvent(CounterEvent event) {
+    eventController.add(event);
+  }
+
   CounterStreamController() {
     eventController.stream.listen((event) {
       _handleEvent(event);
@@ -26,5 +30,7 @@ class CounterStreamController {
         _state--;
         break;
     }
+
+    stateController.add(_state);
   }
 }
