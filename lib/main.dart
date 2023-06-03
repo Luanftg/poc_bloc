@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:poc_bloc/counter_cubit.dart';
-
 import 'my_home_page.dart';
 
 void main() {
