@@ -42,6 +42,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   int get initialData => _counter;
 }
 ```
+
 ### StreamController
 
 ```dart
@@ -81,4 +82,18 @@ class CounterStreamController {
     stateController.add(_state);
   }
 }
+```
+
+### UI
+
+```dart
+StreamBuilder<int>(
+  stream: counterBloc.stream,
+  initialData: 0,
+  builder: (_, snapshot) {
+    return Text(
+      snapshot.data.toString(),
+      style: Theme.of(context).textTheme.headlineMedium,
+      );
+    }),              
 ```
